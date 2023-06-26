@@ -1,3 +1,7 @@
+## Update Logs
+- 2023.06.27: [Polyglot-ko 3.8B 기반 NALLM-polyglot-ko-3.8B 모델](https://huggingface.co/nojiyoon/nallm-polyglot-ko-3.8b-base) 공개
+- 2023.06.26: [Polyglot-ko 1.3B 기반 NALLM-polyglot-ko-1.3B 모델](https://huggingface.co/nojiyoon/nallm-polyglot-ko-1.3b-base) 공개
+
 # NA-LLM(나름): NAra information Large Language Model
 ### 👆 하나는 나름 잘 하는 대화형 언어모델
 
