@@ -15,3 +15,20 @@
 
 - 모든 것을 말할 수 있는 언어 모델은 아닙니다. 하지만, 한국 사람들이 공기관에 제기하는 민원과 같은 텍스트를 넣으면, 공기관과 유사한 방식으로 대답하는 것 하나만은 나름 잘 하는 언어모델입니다.
 
+  
+## Example
+  (이미지 필요)
+
+
+## Backbone Model: KoBART, Polyglot-ko
+NA-LLM(나름)은 Backbone Model로 [KoBART](https://github.com/SKT-AI/KoBART), [Polyglot-ko](https://github.com/EleutherAI/polyglot)를 사용하여 학습을 진행하였습니다.
+  
+  
+## NA-LLM 모델 실행 예시 코드
+### Huggingface Pipeline으로 실행
+  (코드 필요)  
+  
+  
+## Dataset
+### 나름 데이터셋 v1
+나름 데이터셋 v1은 [공공데이터포털 국민권익위원회_민원정책 질의응답조회서비스](https://www.data.go.kr/data/15074671/openapi.do)를 기반으로 합니다.
