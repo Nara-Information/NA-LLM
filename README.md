@@ -26,8 +26,13 @@ NA-LLM(나름)은 Backbone Model로 [KoBART](https://github.com/SKT-AI/KoBART), 
   
 ## NA-LLM 모델 실행 예시 코드
 ### Huggingface Pipeline으로 실행
-  (코드 필요)  
-  
+```python
+from transformers import AutoTokenizer, AutoModelForCausalLM
+
+tokenizer = AutoTokenizer.from_pretrained("nojiyoon/nallm-polyglot-ko-1.3b-base")
+
+model = AutoModelForCausalLM.from_pretrained("nojiyoon/nallm-polyglot-ko-1.3b-base")
+```
   
 ## Dataset
 ### 나름 데이터셋 v1
