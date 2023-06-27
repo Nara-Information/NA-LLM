@@ -1,0 +1,5 @@
+# ignore.txt
+# put qano's to not augment 
+# If nothing is set, or the file path is not set with
+# `ignoreListPath` in config.yaml, 
+# will ignore nothing 

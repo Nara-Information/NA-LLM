@@ -1,0 +1,75 @@
+credPath: ./creds.yaml
+fetching:
+  doFetch: true
+  doClean: true
+  nMax: 1000
+  makeReviewTsv: true
+  # if `true`, will make a tsv with token counts for review 
+  makeCompleteJson: true
+  # if 'true', will make json for training
+  continueFromPreviousFile: false
+  previousFilePath: previous.tsv
+  searchFrom: 20200101
+  searchTo: 20230531
+  # date in 'YYYYMMDD' format 
+  dataSplitRatio:
+    train: 8
+    dev: 1
+    test: 1
+  outputPath: ./out
+  outputName: fetched # don't put file extionsion
+augmenting:
+  doMergeSplits: false
+  promptPath: utils/prompt.txt
+  continueFromTemp: true
+  inPath: ./in/fetched.json
+  outputPath: ./out
+  outputName: augmented # don't put file extionsion
+  allowListPath: ./allow.txt
+  ignoreListPath: ./ignore.txt
+  # you can safely remove allowListPath and ignoreListPath pairs if not needed.
+  # when both allowList and ignoreList are set, will augment for elements in allowList
+  # that is not in ignoreList 
+  # (i.e., $A - I$ for est of allowList $A$ and set of ignoreList $I$)
+  gptArgs:
+    model: gpt-3.5-turbo
+    temperature: 1.0
+    max_tokens: 2500
+    top_p: 1.0
+    frequency_penalty: 0.01
+    presence_penalty: 0.0
+trainingCausalLM:
+  modelIdentifier: EleutherAI/polyglot-ko-1.3b
+  dataPath: ./data/inqueries_aug_1_0.json
+  saveLocal: false
+  saveToHF: true 
+  modelSaveIdentifier: nallm-polyglot-ko-1.3b
+  doApplyQuantization: false
+  doMergeAndUnload: true
+  quantizationBits: 4 # consider 4 for reducing CUDA memory use 
+                      # note: If set as 8, 'doMergeAndUnload' may not work properly
+                      # with github version of PEFT
+  maxStep: 300
+  trainBatch: 16
+  evalBatch: 32
+  evalWith: bleu
+  bleuMethod: sacrebleu 
+  reportToWandb: true 
+  wandbProjectName: nallm-polyglot-ko-1.3b 
+  wandbRunName: nallm-polyglot-ko-1.3b-run-001
+trainingTranslateLM:
+  modelIdentifier: gogamza/kobart-base-v2
+  dataPath: ../data/inqueries_aug_1_0.json
+  saveLocal: false
+  saveToHF: true 
+  modelSaveIdentifier: nallm-bart-004
+  epochSince: 1
+  maxEpoch: 10
+  trainBatch: 32
+  evalBatch: 64
+  learningRate: 1e-4
+  evalWith: bleu
+  bleuMethod: sacrebleu 
+  reportToWandb: true 
+  wandbProjectName: nallm-bart-004
+  wandbRunName: nallm-bart-004

@@ -1,0 +1,5 @@
+modelConfig:
+  baseModelID: Model identifier at HuggingFace Hub 
+  saveModelID: Model identifier to use to push to HuggingFace
+trainingConfig:
+  

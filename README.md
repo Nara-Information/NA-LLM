@@ -5,7 +5,8 @@
 ## Update Logs
 - 2023.06.27: [Polyglot-ko 3.8B 기반 NALLM-polyglot-ko-3.8B 모델](https://huggingface.co/nojiyoon/nallm-polyglot-ko-3.8b-base) 공개
 - 2023.06.26: [Polyglot-ko 1.3B 기반 NALLM-polyglot-ko-1.3B 모델](https://huggingface.co/nojiyoon/nallm-polyglot-ko-1.3b-base) 공개
-- 2023.06.26: [KoBART 기반 NALLM-kobart 모델]() 공개
+- 2023.06.27: [KoBART 기반 NALLM-bart 모델](https://huggingface.co/gyulukeyi/nallm-bart) 공개
+
 - - -
 
 # NA-LLM(나름): NAra information Large Language Model
@@ -17,26 +18,62 @@
 
   
 ## Example
-  (이미지 필요)
 
+### 입력 
+
+|||
+|--|--|
+|기관|경찰청|
+|제목|행정심판의 대상|
+|질문|행정심판의 대상은 무엇인가요?|
+
+### 출력 
+
+#### nallm-polyglot-ko-1.3b
+
+> 행정심판은 행정청의 위법 또는 부당한 처분의 취소 및 위법 또는 부당한 처분의 변경, 부작위에 따른 권리구제절차, 부당해고 등 권리구제절차의 대상이 되는 처분을 행하는 행정기관에 대하여 제기할 수 있는 제도입니다. 행정심판의 대상이 되는 처분에는 행정처분(예-징계해고), 행정지도(단속현장에서의 주의 등), 직권취소, 직권정지, 사실조사개시, 시정지시등이 있습니다.
+> 행정처분은 행정청의 의사에 반하는 형식적인 행정작용으로 인하여 국민이 권리를 침해당한 경우에 그 권리의 구제를 위하여 정부가 관여하는 처분을 말하며, 위의 대상이 되는 행정처분으로는 행정청의 의사에 반하는 형식적인 행정행위를 말하며, 그 자체로 행정처분의 성질을 가지는 것은 아니고, 행정청의 의사에 반하는 실질적인 행위가 있는 경우에 한합니다. 행정지도에는 통행시간 또는 주차행위의 허용, 주차위반 사실의 단속현장에서의 주의 등을 말하며, 단속에 대한 행정지도에는 행정처분의 대상이 되지는 않습니다.
+
+#### nallm-bart
+
+>  행정심판은 행정청의 위법부당한 처분이나 부작위를 대상으로 하고 있고, 여기에서 처분은 행정청이 행하는 구체적 사실에 관한 법집행으로서의 공권력의 행사 또는 그 거부, 그 밖에 이에 준하는 행정작용을 말합니다.
+> ○ 그런데 공공기관과 체결한 계약은 청구인과 피청구인이 상호 대등한 지위에서 체결한 사법상 계약에 해당하므로 입찰을 무효로 한 것 역시 국가를 당사자로 하는 계약에 부수된 선행절차로서 사법상의 법률행위일 뿐 공공기관이 우월한 공권력의 주체로서 일방적으로 행하는 처분이라고 볼 수 없어 행정심판의
 
 ## Backbone Model: KoBART, Polyglot-ko
-NA-LLM(나름)은 Backbone Model로 [KoBART](https://github.com/SKT-AI/KoBART), [Polyglot-ko](https://github.com/EleutherAI/polyglot)를 사용하여 학습을 진행하였습니다.
-  
-  
+
+NA-LLM(나름)은 Backbone Model로 [KoBART](https://huggingface.co/gogamza/kobart-base-v2), [Polyglot-ko](https://github.com/EleutherAI/polyglot)를 사용하여 학습을 진행하였습니다.
+
+훈련은 각각 모델에 맞추어, polyglot-ko는 Decoder만 훈련하는 방식이, KoBART는 Encoder-Decoder 훈련 방식이 진행되었습니다. 사전훈련과 규모에 차이가 큰 만큼 결과가 되는 모델의 성능에도 다소 다른 경향이 있습니다:
+
+|backbone|유창함|정확함|하드웨어|
+|---|---|---|---|
+|polyglot-ko|높음|다른 이야기를 하기 쉬움|고사양 CUDA GPU 필요|
+|KoBART|제한된 텍스트 생성|파인튜닝 데이터 반영|CPU로도 서비스 가능|
+
+각각 모델에 따라 decoding strategy도 달라집니다. 지금으로서는 HuggingFace Transformers 기준으로 polyglot-ko 기반 모델은 beam search, KoBART 기반 모델은 contrastive search가 효율적인 것 처럼 보입니다. testset BLEU 점수를 기반으로 한 최적의 파라미터는 demo 파일에 적용되어 있습니다.
+
 ## NA-LLM 모델 실행 예시 코드
-### Huggingface Pipeline으로 실행
-```python
-from transformers import AutoTokenizer, AutoModelForCausalLM
 
-tokenizer = AutoTokenizer.from_pretrained("nojiyoon/nallm-polyglot-ko-1.3b-base")
+`demo` 폴더의 노트북을 참고해 주세요. Google colab에서 실행할 때를 기준으로 작성되었습니다.
 
-model = AutoModelForCausalLM.from_pretrained("nojiyoon/nallm-polyglot-ko-1.3b-base")
-```
-  
 ## Dataset
 ### 나름 데이터셋 v1
-나름 데이터셋 v1은 [공공데이터포털 국민권익위원회_민원정책 질의응답조회서비스](https://www.data.go.kr/data/15074671/openapi.do)를 기반으로 합니다. (설명 필요)
+나름 데이터셋 v1은 [공공데이터포털 국민권익위원회_민원정책 질의응답조회서비스](https://www.data.go.kr/data/15074671/openapi.do)를 기반으로 합니다.
+
+구축 시점을 기준으로 939건의 최신 데이터를 수집하였습니다. 데이터의 수가 모델 훈련에 적절한 양이라 볼 수 없어, OpenAI의 API를 통해 질문을 다시말하기(paraphrasing) 방식으로 증강하였습니다. 
+
+구체적으로 데이터셋은 아래와 같이 구축되었습니다.
+
+1. 공공데이터포털 데이터 호출 
+2. 호출된 데이터의 '응답' 정제 
+    - 민원 내용에서의 상투적인 인삿말 제거 
+    - 전화번호, root 아래의 URL 도메인, 담당자등의 실명 등 민원 처리 시점에 따라 변동되는 정보 제거 
+    - 공공데이터포털에서 반출한 HTML 태그 제거 및 HTML string 변환 
+    - 연속되는 줄바꿈, 줄 끝의 공백문자 등의 형식 제거 
+3. '기관'과 '제목', '질문' 내용을 토대로 '질문' 내용을 세 번 더 만들도록 OpenAI API 호출 
+4. 호출 결과에서 생성된 '질문' 추출; 생성 결과가 '질문'으로 볼 수 없는 경우 프롬프트 변경 후 재호출 
+5. 아래와 같은 JSON 데이터 구축
+
 ```json
 {
     "qano": 6837003,
@@ -69,3 +106,11 @@ model = AutoModelForCausalLM.from_pretrained("nojiyoon/nallm-polyglot-ko-1.3b-ba
    ]
 },
 ```
+구체적인 데이터는 [`data/inqueries_aug_1_0.json`](<!--@TODO link data permalink-->)을 참고해 주세요.
+
+<!--
+@TODO detrmine license and add use right info
+## License
+
+
+-->

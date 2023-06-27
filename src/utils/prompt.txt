@@ -1,0 +1,10 @@
+${var1}
+
+Above is a citizen's question to a governmental institute in the Republic of Korea. Given the content above, make exactly three more questions under the conditions below:
+
+- Write in Korean
+- Present your question as an ordered list
+- Make each question 1000-1500 characters long 
+- Do not repeat yourself 
+- Do not answer to the question: your job is to make questions, not answers
+- Do not mention your name 

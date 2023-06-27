@@ -1,0 +1,5 @@
+# allow.txt
+# put qano's to augment 
+# If nothing is set, or the file path is not set with
+# `allowListPath` in config.yaml, 
+# will try agument with all in the train split.
