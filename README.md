@@ -21,10 +21,10 @@
 
 ### 입력 
 
-|||
-|--|--|
-|기관|경찰청|
-|제목|행정심판의 대상|
+|정보|값                   |
+|---|---------------------|
+|기관|경찰청                 |
+|제목|행정심판의 대상           |
 |질문|행정심판의 대상은 무엇인가요?|
 
 ### 출력 
@@ -45,16 +45,19 @@ NA-LLM(나름)은 Backbone Model로 [KoBART](https://huggingface.co/gogamza/koba
 
 훈련은 각각 모델에 맞추어, polyglot-ko는 Decoder만 훈련하는 방식이, KoBART는 Encoder-Decoder 훈련 방식이 진행되었습니다. 사전훈련과 규모에 차이가 큰 만큼 결과가 되는 모델의 성능에도 다소 다른 경향이 있습니다:
 
-|backbone|유창함|정확함|하드웨어|
-|---|---|---|---|
-|polyglot-ko|높음|다른 이야기를 하기 쉬움|고사양 CUDA GPU 필요|
-|KoBART|제한된 텍스트 생성|파인튜닝 데이터 반영|CPU로도 서비스 가능|
+|backbone   |유창함         |정확함            |하드웨어            |  
+|-----------|-------------|-----------------|------------------|
+|polyglot-ko|높음          |다른 이야기를 하기 쉬움|고사양 CUDA GPU 필요|
+|KoBART     |제한된 텍스트 생성|파인튜닝 데이터 반영  |CPU로도 서비스 가능  |
 
 각각 모델에 따라 decoding strategy도 달라집니다. 지금으로서는 HuggingFace Transformers 기준으로 polyglot-ko 기반 모델은 beam search, KoBART 기반 모델은 contrastive search가 효율적인 것 처럼 보입니다. testset BLEU 점수를 기반으로 한 최적의 파라미터는 [demos](https://github.com/Nara-Information/NA-LLM/tree/b74ae8f9be79df44b9bf63e324f5c0e357bb5c16/demos) 폴더의 각 파일에 적용되어 있습니다.
 
 ## NA-LLM 모델 실행 예시 코드
 
-[`demo`](https://github.com/Nara-Information/NA-LLM/tree/b74ae8f9be79df44b9bf63e324f5c0e357bb5c16/demos) 폴더의 노트북을 참고해 주세요. Google colab에서 실행할 때를 기준으로 작성되었습니다.
+- [NA-LLM-Polyglot-ko-1.3b](https://githubtocolab.com/Nara-Information/NA-LLM/blob/main/demos/NALLM_polyglot_ko_1_3b_demo.ipynb)
+- [NA-LLM-bart](https://githubtocolab.com/Nara-Information/NA-LLM/blob/main/demos/NALLM_bart_demo.ipynb)
+
+기타 내용은 [`demos`](https://github.com/Nara-Information/NA-LLM/tree/b74ae8f9be79df44b9bf63e324f5c0e357bb5c16/demos) 폴더의 노트북을 참고해 주세요. Google colab에서 실행할 때를 기준으로 작성되었습니다.
 
 ## Dataset
 ### 나름 데이터셋 v1
