@@ -3,9 +3,9 @@
 </p>
 
 ## Update Logs
-- 2023.06.27: [Polyglot-ko 3.8B 기반 NALLM-polyglot-ko-3.8B 모델](https://huggingface.co/nojiyoon/nallm-polyglot-ko-3.8b-base) 공개
-- 2023.06.26: [Polyglot-ko 1.3B 기반 NALLM-polyglot-ko-1.3B 모델](https://huggingface.co/nojiyoon/nallm-polyglot-ko-1.3b-base) 공개
-- 2023.06.27: [KoBART 기반 NALLM-bart 모델](https://huggingface.co/gyulukeyi/nallm-bart) 공개
+- 2023.06.27: [Polyglot-ko 3.8B 기반 NALLM-polyglot-ko-3.8B 모델](https://huggingface.co/Nara-Lab/nallm-polyglot-ko-3.8b-base) 공개
+- 2023.06.26: [Polyglot-ko 1.3B 기반 NALLM-polyglot-ko-1.3B 모델](https://huggingface.co/Nara-Lab/nallm-polyglot-ko-1.3b-base) 공개
+- 2023.06.27: [KoBART 기반 NALLM-bart 모델](https://huggingface.co/Nara-Lab/nallm-bart) 공개
 
 - - -
 
